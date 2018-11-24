@@ -1,0 +1,284 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pr&aacute;ctica 5: Series de Fourier en tiempo continuo</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-22"><meta name="DC.source" content="ASySPrac5LuisBarreraIngridPulido.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pr&aacute;ctica 5: Series de Fourier en tiempo continuo</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Integrantes</a></li><li><a href="#2">Objetivos</a></li><li><a href="#3">Introducci&oacute;n</a></li><li><a href="#4">Desarrollo</a></li><li><a href="#5">Ejemplo 6.1</a></li><li><a href="#6">Ejemplo 6.2</a></li><li><a href="#7">Ejemplo 6.4</a></li><li><a href="#8">Ejercicio 6.5</a></li><li><a href="#9">Ejemplo 6.7</a></li><li><a href="#10">Punto 6</a></li><li><a href="#11">Punto 7</a></li><li><a href="#12">Bibliograf&iacute;a</a></li></ul></div><h2 id="1">Integrantes</h2><p>Barrera Bautista Luis Franciso</p><p>Pulido Morales Ingrid</p><h2 id="2">Objetivos</h2><div><ul><li>Realizar gr&aacute;ficas de series de Fourier exponenciales y trigon&oacute;metricas en tiempo coontinuo</li><li>Manipulaci&oacute;n de instrucciones en MATLAB</li><li>Calculo n&uacute;merico de los coeficientes de Fourier</li></ul></div><h2 id="3">Introducci&oacute;n</h2><p>Aproximaci&oacute;n Num&eacute;rica de <img src="ASySPrac5LuisBarreraIngridPulido_eq09969345159538061326.png" alt="$D_{n}$"></p><p>Podemos calcular <img src="ASySPrac5LuisBarreraIngridPulido_eq09969345159538061326.png" alt="$D_{n}$"> usando el DTF (Transformada Discreta de Fourier), la cual usa las muestras de una se&ntilde;al peri&oacute;dica <img src="ASySPrac5LuisBarreraIngridPulido_eq14833433867325483769.png" alt="$x(t)$"> en un periodo. El intervalo de muestreo es T segundos. Por lo tanto, hay <img src="ASySPrac5LuisBarreraIngridPulido_eq07667192581142659360.png" alt="$N_{0}=\frac{T_{0}}{T}$"> numero de muestras en un periodo <img src="ASySPrac5LuisBarreraIngridPulido_eq07389878485796935067.png" alt="$T_{0}$">. Para encontrar una relaci&oacute;n entre <img src="ASySPrac5LuisBarreraIngridPulido_eq09969345159538061326.png" alt="$D_{n}$"> y las muestras de <img src="ASySPrac5LuisBarreraIngridPulido_eq14833433867325483769.png" alt="$x(t)$">, consideramos</p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq13173007615449564193.png" alt="$D_{n}=\frac{1}{T_{0}}\int_{T_{0}}x(t)e^{-jnw_{0}t}dt$"></p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq17336604968365193777.png" alt="$=\lim_{T\rightarrow 0} \frac{1}{N_{0}T}\sum_{k=0}^{N_{0}-1}x(kT)e^{-jnw_{0}kT}T$"></p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq06864720545068454053.png" alt="$=\lim_{T\rightarrow 0} \frac{1}{N_{0}}\sum_{k=0}^{N_{0}-1}x(kT)e^{-jn\Omega k} \ \ \ \ \ \ \ \ \ \ \ \ (1)$"></p><p>Donde <img src="ASySPrac5LuisBarreraIngridPulido_eq06905719444939904769.png" alt="$x(kT)$"> es la kth muestra de <img src="ASySPrac5LuisBarreraIngridPulido_eq14833433867325483769.png" alt="$x(t)$"> y</p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq08731689409761494951.png" alt="$N_{0}=\frac{T_{0}}{T} \ \ \ \ \ \ \ \ \ \Omega_{0}=\omega_{0}T= \frac{2\pi}{N_{0}}\ \ \ \ \ \ \  \ \ \ \ \ \ \ (2)$"></p><p>Note que es imposible hacer <img src="ASySPrac5LuisBarreraIngridPulido_eq01830637351211460407.png" alt="$lim_{T\rightarrow 0}$"> en la Ec.(1). Podemos hacer <img src="ASySPrac5LuisBarreraIngridPulido_eq14047577632175690031.png" alt="$T$"> peque&ntilde;a, pero no hacerla cero, lo que causar&aacute; que los datos se incrementen sin un l&iacute;mite. Entonces, ignoramos el l&iacute;mite en <img src="ASySPrac5LuisBarreraIngridPulido_eq14047577632175690031.png" alt="$T$"> en la Ec. (1) con el argumento de que <img src="ASySPrac5LuisBarreraIngridPulido_eq14047577632175690031.png" alt="$T$"> es razonablemente peque&ntilde;o. Por lo tanto, podemos expresar la Ec. (1) como:</p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq15240537723336024269.png" alt="$D_{n}=\frac{1}{N_{0}}\sum_{k=0}^{N_{0}-1} x(kT)e^{-j\pi\Omega_{0}k}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3)$"></p><p>Ahora, de la Ec.(2), <img src="ASySPrac5LuisBarreraIngridPulido_eq10323455347510753347.png" alt="$\Omega_{0}N_{0}=2\pi$">. Por lo tanto, <img src="ASySPrac5LuisBarreraIngridPulido_eq10471601666182115601.png" alt="$e^{j\Omega_{0}(k+N_{0})}$"> <img src="ASySPrac5LuisBarreraIngridPulido_eq10327904074116176010.png" alt="$=e^{j\Omega_{0}k}$"> y de la Ec. (3)</p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq03154453879718613841.png" alt="$D_{n+N_{0}}=D_{n}$"></p><p>La propiedad de periodicidad <img src="ASySPrac5LuisBarreraIngridPulido_eq03154453879718613841.png" alt="$D_{n+N_{0}}=D_{n}$"> significa que m&aacute;s all&aacute; de <img src="ASySPrac5LuisBarreraIngridPulido_eq10998102021768091761.png" alt="$n=\frac{N_{0}}{2}$">, los coeficientes representan los valores para las <img src="ASySPrac5LuisBarreraIngridPulido_eq08984225997457563733.png" alt="$n$"> negativas. Por ejemplo <img src="ASySPrac5LuisBarreraIngridPulido_eq14078757525063243225.png" alt="$N_{0}=32, D_{17}=D_{-15},D_{18}=D_{-14},...,D_{31}=D_{-1}$">. El ciclo se repite de nuevo en n=32.</p><h2 id="4">Desarrollo</h2><h2 id="5">Ejemplo 6.1</h2><p><img src="ASySPrac5LuisBarreraIngridPulido_eq16348198454424581958.png" alt="$f(t)= e^{-\frac{t}{2}}$"></p><p>Se calcul&oacute; la Serie de Fourier trigonom&eacute;trica, popr lo tanto sus coeficientes son</p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq15067073817671314275.png" alt="$a_{n}=\frac{2}{\pi}\int_{0}^{\pi}e^{-\frac{t}{2}}cos(2nt)dt= 0.504(\frac{2}{1+16n^{2}})$"></p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq03850963170081147897.png" alt="$b_{n}=\frac{2}{\pi}\int_{0}^{\pi}e^{-\frac{t}{2}}sin(2nt)dt=0.504(\frac{8n}{1+16n^{2}})$"></p><p>Graficando la serie</p><div><ul><li>Para 4 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="ej1_1.png" alt=""> </p><div><ul><li>Para 15 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="ej1_2.png" alt=""> </p><h2 id="6">Ejemplo 6.2</h2><p><img vspace="5" hspace="5" src="fig1.PNG" alt=""> </p><p>Se calcul&oacute; la Serie de Fourier Exponencial</p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq14267061328210870373.png" alt="$D_{n}=\frac{1}{2}\int_{-0.5}^{1.5}x(t)e^{-jn \pi t} = -\frac{12jsin(\frac{n \pi}{2})}{n^{2}\pi^{2}}$"></p><p>Graficando la serie</p><div><ul><li>Para 4 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="ej2_1.png" alt=""> </p><div><ul><li>Para 15 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="ej2_2.png" alt=""> </p><h2 id="7">Ejemplo 6.4</h2><p>Se calcul&oacute; la Serie de Fourier Exponencial para la siguiente funci&oacute;n</p><p><img vspace="5" hspace="5" src="fig2.PNG" alt=""> </p><p>Calculando su <img src="ASySPrac5LuisBarreraIngridPulido_eq09969345159538061326.png" alt="$D_{n}$"></p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq16631161717932185061.png" alt="$D_{n}=\frac{1}{2\pi}\int_{0}^{\pi}e^{-jnt}dt= \frac{sin(\frac{\pi n}{2})}{\pi n}$"></p><p>Graficando la Serie</p><div><ul><li>Para 4 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="ej3_1.png" alt=""> </p><div><ul><li>Para 15 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="ej3_2.png" alt=""> </p><h2 id="8">Ejercicio 6.5</h2><p><img src="ASySPrac5LuisBarreraIngridPulido_eq13242033568718596654.png" alt="$x(t)=\left | sin(t) \right |$"></p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq06749657572182140672.png" alt="$D_{n}=\frac{1}{\pi}\int_{0}^{\pi}\left | sin(t) \right | e^{-jn\pi t}dt = \frac{2}{\pi - 4\pi n^{2}}$"></p><p>Graficando la serie</p><div><ul><li>Prara 4 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="eje4_1.png" alt=""> </p><div><ul><li>Para 15 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="eje4_2.png" alt=""> </p><h2 id="9">Ejemplo 6.7</h2><p><img src="ASySPrac5LuisBarreraIngridPulido_eq03934071275276059315.png" alt="$x(t)=\delta_{T_{0}}(t)$"></p><p>Calculando el <img src="ASySPrac5LuisBarreraIngridPulido_eq09969345159538061326.png" alt="$D_{n}$"> con <img src="ASySPrac5LuisBarreraIngridPulido_eq09669737996098461118.png" alt="$T_{0}= 3$"></p><p><img src="ASySPrac5LuisBarreraIngridPulido_eq13106944892443922061.png" alt="$D_{n}= \frac{1}{3} \int_{-\frac{3}{2}}^{\frac{3}{2}} \delta (t)e^{-jn\omega_{0}t}dt$"></p><p>Graficando la serie</p><div><ul><li>Para 4 arm&oacute;nicos</li></ul></div><p><img vspace="5" hspace="5" src="eje5_1.png" alt=""> </p><p><img vspace="5" hspace="5" src="eje5_2.png" alt=""> </p><h2 id="10">Punto 6</h2><p>Se elabor&oacute; un c&oacute;digo similar al COMPUTER EXAMPLE C6.2 que se muestra a continuaci&oacute;n</p><pre class="language-matlab">t0=-0.5;
+tf=1.5;
+t=linspace (t0, tf,1000);
+x = @(t) 6.*t.*(t&gt;=-0.5 &amp; t&lt;0.5)+6.*(1-t).*(t&gt;=0.5 &amp; t&lt;1.5);
+t = linspace (-2*pi, 2*pi,1000);
+y=x(t);
+sumterms = zeros(16, length(t));
+gei <span class="string">Ilinspace()</span>;
+sumterms(1,:) = 1/2;
+<span class="keyword">for</span> n = 1:size(sumterms,1)-1;
+sumterms(n+1,:) = 24*sin(n*pi/2)*sin(pi*n*t)/(n^2*pi^2);
+<span class="keyword">end</span>
+x_N = cumsum (sumterms);
+figure(1);
+clf;
+ind = 0;
+<span class="keyword">for</span> N = [0,1:2:size(sumterms, 1)-1]
+ind = ind+1;
+subplot (3,3,ind);
+plot (t,x_N(N+1,:),t,y,<span class="string">'k--'</span>);
+axis ([-1 2 -4 4]);
+xlabel(<span class="string">'t'</span>);
+aux=strcat(<span class="string">'x_{'</span>,num2str(N),<span class="string">'}'</span>);
+ylabel(aux);
+<span class="keyword">end</span>
+</pre><p><img vspace="5" hspace="5" src="eje6.png" alt=""> </p><h2 id="11">Punto 7</h2><p>Para el ejemplo 6.1 se implementaron el algoritmo de trapecio compuesto y el c&oacute;digo COMPUTER EX C6.4 para calcular desde <img src="ASySPrac5LuisBarreraIngridPulido_eq11997554103616143499.png" alt="$D_{0}...D_{4}$"> con n=15</p><p>Realizando una tabla de comparaci&oacute;n</p><p><img vspace="5" hspace="5" src="fig3.PNG" alt=""> </p><h2 id="12">Bibliograf&iacute;a</h2><pre>B. P. Lathi. (2005). Linear Systems and Signals. Oxford, EE. UU.: Oxford University Press.
+Martinez, M. Rafael. (2018). Series de Fourier para se&ntilde;ales continuas. 2018, de Mate y as&iacute; Sitio web: https://www.youtube.com/user/rafa5131</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 5: Series de Fourier en tiempo continuo
+%
+% 
+%% Integrantes
+%
+% Barrera Bautista Luis Franciso
+%
+% Pulido Morales Ingrid 
+%% Objetivos
+%
+% * Realizar gráficas de series de Fourier exponenciales y trigonómetricas
+% en tiempo coontinuo
+% * Manipulación de instrucciones en MATLAB
+% * Calculo númerico de los coeficientes de Fourier
+%% Introducción
+%
+% Aproximación Numérica de $D_{n}$
+%
+% Podemos calcular $D_{n}$ usando el DTF (Transformada Discreta de
+% Fourier), la cual usa las muestras de una señal periódica $x(t)$ en un
+% periodo. El intervalo de muestreo es T segundos. Por lo tanto, hay
+% $N_{0}=\frac{T_{0}}{T}$ numero de muestras en un periodo $T_{0}$. Para
+% encontrar una relación entre $D_{n}$ y las muestras de $x(t)$,
+% consideramos
+% 
+% $D_{n}=\frac{1}{T_{0}}\int_{T_{0}}x(t)e^{-jnw_{0}t}dt$
+%
+% $=\lim_{T\rightarrow 0} \frac{1}{N_{0}T}\sum_{k=0}^{N_{0}-1}x(kT)e^{-jnw_{0}kT}T$
+%
+% $=\lim_{T\rightarrow 0} \frac{1}{N_{0}}\sum_{k=0}^{N_{0}-1}x(kT)e^{-jn\Omega k} \ \ \ \ \ \ \ \ \ \ \ \ (1)$
+%
+% Donde $x(kT)$ es la kth muestra de $x(t)$ y
+%
+% $N_{0}=\frac{T_{0}}{T} \ \ \ \ \ \ \ \ \ \Omega_{0}=\omega_{0}T= \frac{2\pi}{N_{0}}\ \ \ \ \ \ \  \ \ \ \ \ \ \ (2)$ 
+%
+% Note que es imposible hacer $lim_{T\rightarrow 0}$ en la Ec.(1). Podemos hacer $T$ pequeña, pero no hacerla cero, lo que causará que los datos se incrementen sin un límite.
+% Entonces, ignoramos el límite en $T$ en la Ec. (1) con el argumento de
+% que $T$ es razonablemente pequeño. Por lo tanto, podemos expresar la Ec. (1) como: 
+%
+% $D_{n}=\frac{1}{N_{0}}\sum_{k=0}^{N_{0}-1} x(kT)e^{-j\pi\Omega_{0}k}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (3)$
+%  
+% Ahora, de la Ec.(2), $\Omega_{0}N_{0}=2\pi$. Por lo tanto,
+% $e^{j\Omega_{0}(k+N_{0})}$ $=e^{j\Omega_{0}k}$ y de la Ec. (3)
+%
+% $D_{n+N_{0}}=D_{n}$  
+%
+% La propiedad de periodicidad $D_{n+N_{0}}=D_{n}$ significa que más allá
+% de $n=\frac{N_{0}}{2}$, los coeficientes representan los valores para las
+% $n$ negativas. Por ejemplo $N_{0}=32,
+% D_{17}=D_{-15},D_{18}=D_{-14},...,D_{31}=D_{-1}$. El ciclo se repite de
+% nuevo en n=32.
+%% Desarrollo
+%% Ejemplo 6.1
+% $f(t)= e^{-\frac{t}{2}}$
+% 
+% Se calculó la Serie de Fourier trigonométrica, popr lo tanto sus
+% coeficientes son
+%
+% $a_{n}=\frac{2}{\pi}\int_{0}^{\pi}e^{-\frac{t}{2}}cos(2nt)dt= 0.504(\frac{2}{1+16n^{2}})$
+%
+% $b_{n}=\frac{2}{\pi}\int_{0}^{\pi}e^{-\frac{t}{2}}sin(2nt)dt=0.504(\frac{8n}{1+16n^{2}})$
+%
+% Graficando la serie
+%
+% * Para 4 armónicos 
+%
+% <<ej1_1.png>>
+%
+% * Para 15 armónicos
+%
+% <<ej1_2.png>>
+% 
+%% Ejemplo 6.2
+%
+% <<fig1.PNG>>
+%
+% Se calculó la Serie de Fourier Exponencial 
+%  
+% $D_{n}=\frac{1}{2}\int_{-0.5}^{1.5}x(t)e^{-jn \pi t} = -\frac{12jsin(\frac{n \pi}{2})}{n^{2}\pi^{2}}$
+%
+% Graficando la serie
+%
+% * Para 4 armónicos
+%
+% <<ej2_1.png>>
+%
+% * Para 15 armónicos
+%
+% <<ej2_2.png>>
+%
+%% Ejemplo 6.4
+%
+% Se calculó la Serie de Fourier Exponencial para la siguiente función
+%
+% <<fig2.PNG>>
+%
+% Calculando su $D_{n}$
+%
+% $D_{n}=\frac{1}{2\pi}\int_{0}^{\pi}e^{-jnt}dt= \frac{sin(\frac{\pi n}{2})}{\pi n}$
+%
+% Graficando la Serie
+%
+% * Para 4 armónicos
+%
+% <<ej3_1.png>>
+%
+% * Para 15 armónicos
+%
+% <<ej3_2.png>>
+%% Ejercicio 6.5
+%
+% $x(t)=\left | sin(t) \right |$ 
+%
+% $D_{n}=\frac{1}{\pi}\int_{0}^{\pi}\left | sin(t) \right | e^{-jn\pi t}dt = \frac{2}{\pi - 4\pi n^{2}}$
+%
+% Graficando la serie
+%
+% * Prara 4 armónicos
+%
+% <<eje4_1.png>>
+%
+% * Para 15 armónicos
+%
+% <<eje4_2.png>>
+%% Ejemplo 6.7
+%
+% $x(t)=\delta_{T_{0}}(t)$
+%
+% Calculando el $D_{n}$ con $T_{0}= 3$
+%
+% $D_{n}= \frac{1}{3} \int_{-\frac{3}{2}}^{\frac{3}{2}} \delta (t)e^{-jn\omega_{0}t}dt$
+%
+% Graficando la serie
+%
+% * Para 4 armónicos
+%
+% <<eje5_1.png>>
+%
+% <<eje5_2.png>>
+%
+%% Punto 6
+%
+% Se elaboró un código similar al COMPUTER EXAMPLE C6.2 que se muestra a
+% continuación
+% 
+%   t0=-0.5;
+%   tf=1.5;
+%   t=linspace (t0, tf,1000);
+%   x = @(t) 6.*t.*(t>=-0.5 & t<0.5)+6.*(1-t).*(t>=0.5 & t<1.5);
+%   t = linspace (-2*pi, 2*pi,1000);
+%   y=x(t);
+%   sumterms = zeros(16, length(t));
+%   gei Ilinspace();
+%   sumterms(1,:) = 1/2;
+%   for n = 1:size(sumterms,1)-1;
+%   sumterms(n+1,:) = 24*sin(n*pi/2)*sin(pi*n*t)/(n^2*pi^2);
+%   end
+%   x_N = cumsum (sumterms); 
+%   figure(1); 
+%   clf; 
+%   ind = 0;
+%   for N = [0,1:2:size(sumterms, 1)-1]
+%   ind = ind+1; 
+%   subplot (3,3,ind);
+%   plot (t,x_N(N+1,:),t,y,'kREPLACE_WITH_DASH_DASH'); 
+%   axis ([-1 2 -4 4]);
+%   xlabel('t');
+%   aux=strcat('x_{',num2str(N),'}');
+%   ylabel(aux);
+%   end
+%
+% <<eje6.png>>
+%
+%% Punto 7
+%
+% Para el ejemplo 6.1 se implementaron el algoritmo de trapecio compuesto y
+% el código COMPUTER EX C6.4 para calcular desde $D_{0}...D_{4}$ con n=15
+%
+% Realizando una tabla de comparación
+%
+% <<fig3.PNG>>
+%
+%% Bibliografía
+%  B. P. Lathi. (2005). Linear Systems and Signals. Oxford, EE. UU.: Oxford University Press.
+%  Martinez, M. Rafael. (2018). Series de Fourier para señales continuas. 2018, de Mate y así Sitio web: https://www.youtube.com/user/rafa5131
+%%
+##### SOURCE END #####
+--></body></html>
